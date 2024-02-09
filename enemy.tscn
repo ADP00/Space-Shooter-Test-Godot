@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://uaig1h77f5v4"]
+
+[ext_resource type="Script" path="res://Enemy.gd" id="1_wywyr"]
+[ext_resource type="Texture2D" uid="uid://vkam8k0rnmcp" path="res://Spaceship-shooter-gamekit/spritesheets/enemy-big.png" id="2_u8qot"]
+[ext_resource type="Texture2D" uid="uid://bg2botd2tk4u0" path="res://Spaceship-shooter-gamekit/spritesheets/enemy-medium.png" id="3_4ovut"]
+[ext_resource type="Texture2D" uid="uid://bx3t6toesw2fx" path="res://Spaceship-shooter-gamekit/spritesheets/enemy-small.png" id="4_vdrof"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhhfm"]
+atlas = ExtResource("2_u8qot")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14s2m"]
+atlas = ExtResource("2_u8qot")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6ww7"]
+atlas = ExtResource("3_4ovut")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2dyq"]
+atlas = ExtResource("3_4ovut")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uu1kx"]
+atlas = ExtResource("4_vdrof")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpa6h"]
+atlas = ExtResource("4_vdrof")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mdncy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhhfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14s2m")
+}],
+"loop": true,
+"name": &"large",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6ww7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2dyq")
+}],
+"loop": true,
+"name": &"medium",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uu1kx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpa6h")
+}],
+"loop": true,
+"name": &"small",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bta7i"]
+size = Vector2(32, 29)
+
+[node name="Enemy" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+script = ExtResource("1_wywyr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_mdncy")
+animation = &"small"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bta7i")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

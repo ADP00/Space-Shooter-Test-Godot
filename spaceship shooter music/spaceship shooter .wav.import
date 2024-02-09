@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cihcm7g436yds"
+path="res://.godot/imported/spaceship shooter .wav-f29c05b0784fd885b302f7011b408626.sample"
+
+[deps]
+
+source_file="res://spaceship shooter music/spaceship shooter .wav"
+dest_files=["res://.godot/imported/spaceship shooter .wav-f29c05b0784fd885b302f7011b408626.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

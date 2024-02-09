@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwxx2xrg1s5bx"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_p2437"]
+[ext_resource type="Texture2D" uid="uid://dmpxfxys65lka" path="res://Spaceship-shooter-gamekit/spritesheets/ship.png" id="2_pjdju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hawoe"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l23f5"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(32, 24, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dbcp"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsoys"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(0, 24, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3c3yn"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axnn8"]
+atlas = ExtResource("2_pjdju")
+region = Rect2(64, 24, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pun7j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hawoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l23f5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dbcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsoys")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3c3yn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axnn8")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lo4gu"]
+radius = 16.0
+height = 48.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_p2437")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_pun7j")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lo4gu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
