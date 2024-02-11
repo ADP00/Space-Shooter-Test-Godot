@@ -1,6 +1,7 @@
 extends Node
 
 @export var mob_scene: PackedScene
+@export var laser_scene:PackedScene
 var score
 
 # Called when the node enters the scene tree for the first time.
@@ -21,7 +22,7 @@ func game_over():
 	#Play death animation when player dies
 	$DeathAnimation.position = $Player.position
 	$DeathAnimation.visible = true
-	$DeathAnimation.play()	
+	$DeathAnimation.play()
 
 #connected to start_game signal from hud
 func new_game():
@@ -49,7 +50,7 @@ func _on_mob_timer_timeout():
 	
 	mob.position = mob_spawn_location.position
 	
-	var velocity = Vector2(randf_range(50.0, 80.0), 0.0)
+	var velocity = Vector2(randf_range(40.0, 60.0), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 	
 	add_child(mob)
@@ -58,3 +59,15 @@ func _on_mob_timer_timeout():
 func _on_death_animation_animation_finished():
 	$DeathAnimation.stop()
 	$DeathAnimation.visible = false
+
+
+func _on_player_laser_shot(location):
+	var laser = laser_scene.instantiate()
+	laser.death.connect(_on_laser_death)
+	laser.visible = true
+	laser.position = location
+	add_child(laser)
+
+func _on_laser_death():
+	score += 1
+	$HUD.update_score(score)

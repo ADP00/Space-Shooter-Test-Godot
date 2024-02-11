@@ -1,5 +1,4 @@
-extends RigidBody2D
-
+class_name Enemy extends RigidBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

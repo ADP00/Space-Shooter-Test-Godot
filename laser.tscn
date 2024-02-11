@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnc3c6s6qublk"]
+
+[ext_resource type="Script" path="res://laser.gd" id="1_tax1q"]
+[ext_resource type="Texture2D" uid="uid://hr2hxbtn10mm" path="res://Spaceship-shooter-gamekit/spritesheets/laser-bolts.png" id="2_c5l6s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qab2j"]
+atlas = ExtResource("2_c5l6s")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6ln2"]
+atlas = ExtResource("2_c5l6s")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v3n4x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qab2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6ln2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_er6oy"]
+radius = 7.0
+height = 28.0
+
+[node name="Laser" type="Area2D"]
+visible = false
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_tax1q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_v3n4x")
+frame_progress = 0.563291
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_er6oy")
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

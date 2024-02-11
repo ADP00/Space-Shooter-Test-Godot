@@ -3,8 +3,17 @@ extends Area2D
 @export var speed = 400 #pixels/second
 var screen_size
 
+#preload laser scene
+var laser_scene = preload("res://laser.tscn")
+#laser cool down
+var laser_cool_down = false
+@export var laser_rate = 0.2
+
 #Adds signal for collisions
 signal hit
+
+#Signal for laser
+signal laser_shot(location)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,6 +51,17 @@ func _process(delta):
 	#Keeps player in bounds of window
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	#Check for shoot input
+	if Input.is_action_pressed("shoot"):
+		if !laser_cool_down:
+			#Another input will not trigger if statement
+			laser_cool_down = true
+			shoot()
+			#cool down by waiting
+			await get_tree().create_timer(laser_rate).timeout
+			#allow to if to be accessed again
+			laser_cool_down = false
 
 
 func _on_body_entered(body):
@@ -54,3 +74,8 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+
+#Emit shoot signal with start point
+func shoot():
+	#global position must be sent, not position
+	laser_shot.emit($LaserStart.global_position)

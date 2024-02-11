@@ -69,7 +69,7 @@ animations = [{
 size = Vector2(32, 29)
 
 [node name="Enemy" type="RigidBody2D" groups=["mobs"]]
-collision_mask = 0
+collision_layer = 2
 script = ExtResource("1_wywyr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
